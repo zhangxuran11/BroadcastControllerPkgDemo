@@ -12,17 +12,33 @@ class BroadcastManager : public QObject
     Q_OBJECT
 
 
+    QTimer* trainStateTimer;
+    QTimer* lineInfoTimer;
+    QThread* pthread;
     QextSerialPort *broadcastPort;
 
     CallStateParser callState;
 signals:
     void readyRead();
-public:
-    BroadcastManager(const QString &serialName);
-    const CallStateParser& getOneCallState(){return callState;}
-    void sendBroadcastPkg(BasicParser& parser);
+
 private slots:
     void on_readyRead();
+    void sendTrainState();
+    void sendLineInfo();
+
+public:
+    int trainId;
+    int carId;
+    float speed;
+
+    QString startStationEN;
+    QString startStationThai;
+    QString endStationEN;
+    QString endStationThai;
+    BroadcastManager(const QString &serialName);
+    ~BroadcastManager();
+    const CallStateParser& getOneCallState(){return callState;}
+    void sendBroadcastPkg(BasicParser& parser);
 
 };
 

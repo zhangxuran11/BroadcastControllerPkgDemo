@@ -29,14 +29,9 @@ void CallStateParser::load(const QByteArray& pkg)
     hasCall3 = callMark & 0x04;
     hasCall4 = callMark & 0x08;
     hasBroadcast = appendInfo1 & 0x01;
+    hasBroadcast_lc = appendInfo1 & 0x02;
 }
-quint8 CallStateParser::genarateCheckSum()
-{
-    quint8 sum = 0;
-    for(int i = 0;i < FRAME_SIZE - 1;i++)
-        sum += (quint8)dataFram[i];
-    return sum;
-}
+
 void CallStateParser::generate()
 {
 //    qDebug()<<"genarate ...";
@@ -56,6 +51,7 @@ void CallStateParser::generate()
     callMark |= hasCall4 == true ? 0x08:0;
 //    qDebug()<<"callMark : "<<callMark;
     appendInfo1 |= hasBroadcast == true ? 0x01:0;
+    appendInfo1 |= hasBroadcast_lc == true ? 0x02:0;
 //    qDebug()<<"appendInfo1 : "<<appendInfo1;
     memcpy(dataFram.data(),&msgHead,1);
     memcpy(dataFram.data()+1,&msgLen,1);
@@ -75,15 +71,14 @@ void CallStateParser::generate()
 }
 void CallStateParser::print()
 {
-    qDebug()<<"isValid      : "<<isValid;
-    qDebug()<<"hasCall1     : "<<hasCall1;
-    qDebug()<<"hasCall2     : "<<hasCall2;
-    qDebug()<<"hasCall3     : "<<hasCall3;
-    qDebug()<<"hasCall4     : "<<hasCall4;
-    qDebug()<<"hasBroadcast : "<<hasBroadcast;
-//    for(int i = 0;i < 8;i++)
-//        qDebug("%2x ",(quint8)dataFram.data()[i]);
-//    qDebug("\n");
+    qDebug()<<"isValid          : "<<isValid;
+    qDebug()<<"hasCall1         : "<<hasCall1;
+    qDebug()<<"hasCall2         : "<<hasCall2;
+    qDebug()<<"hasCall3         : "<<hasCall3;
+    qDebug()<<"hasCall4         : "<<hasCall4;
+    qDebug()<<"hasBroadcast     : "<<hasBroadcast;
+    qDebug()<<"hasBroadcast_lc  : "<<hasBroadcast_lc;
+    printRaw();
 
 }
 

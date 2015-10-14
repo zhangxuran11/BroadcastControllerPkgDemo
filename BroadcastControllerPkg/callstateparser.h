@@ -15,11 +15,10 @@ private:
     quint8 appendInfo2;
     quint8 appendInfo3;
     quint8 fcs;//累加和
-    quint8 genarateCheckSum();
     void generate();
-    void load(const QByteArray& pkg);
 
-    friend class BroadcastManager;
+
+//    friend class BroadcastManager;
 public:
     bool isValid; //数据是否有效
     bool hasCall1;//呼叫1是否发生
@@ -27,12 +26,13 @@ public:
     bool hasCall3;//呼叫3是否发生
     bool hasCall4;//呼叫4是否发生
     bool hasBroadcast;//是否有广播信号
+    bool hasBroadcast_lc;//是否有本地广播信号
 
 public:
     CallStateParser():BasicParser(8){}
     explicit CallStateParser(QByteArray pkg):
         BasicParser(8){load(pkg);}
-
+    void load(const QByteArray& pkg);
     void print();
 };
 

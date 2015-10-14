@@ -14,24 +14,24 @@
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralWidget">
-   <widget class="QPushButton" name="pushButton">
+   <widget class="QPushButton" name="sendcall">
     <property name="geometry">
      <rect>
-      <x>190</x>
-      <y>390</y>
+      <x>50</x>
+      <y>480</y>
       <width>98</width>
       <height>27</height>
      </rect>
     </property>
     <property name="text">
-     <string>send</string>
+     <string>send call</string>
     </property>
    </widget>
    <widget class="QCheckBox" name="hasCall1">
     <property name="geometry">
      <rect>
       <x>40</x>
-      <y>140</y>
+      <y>50</y>
       <width>97</width>
       <height>22</height>
      </rect>
@@ -44,7 +44,7 @@
     <property name="geometry">
      <rect>
       <x>180</x>
-      <y>140</y>
+      <y>50</y>
       <width>97</width>
       <height>22</height>
      </rect>
@@ -56,8 +56,8 @@
    <widget class="QCheckBox" name="hasCall3">
     <property name="geometry">
      <rect>
-      <x>310</x>
-      <y>140</y>
+      <x>270</x>
+      <y>50</y>
       <width>97</width>
       <height>22</height>
      </rect>
@@ -69,8 +69,8 @@
    <widget class="QCheckBox" name="hasCall4">
     <property name="geometry">
      <rect>
-      <x>430</x>
-      <y>140</y>
+      <x>380</x>
+      <y>50</y>
       <width>97</width>
       <height>22</height>
      </rect>
@@ -82,8 +82,8 @@
    <widget class="QCheckBox" name="hasBroadcastCall">
     <property name="geometry">
      <rect>
-      <x>560</x>
-      <y>140</y>
+      <x>470</x>
+      <y>50</y>
       <width>161</width>
       <height>22</height>
      </rect>
@@ -95,16 +95,165 @@
      <bool>false</bool>
     </property>
    </widget>
-  </widget>
-  <widget class="QMenuBar" name="menuBar">
-   <property name="geometry">
-    <rect>
-     <x>0</x>
-     <y>0</y>
-     <width>794</width>
-     <height>26</height>
-    </rect>
-   </property>
+   <widget class="QPushButton" name="rail">
+    <property name="geometry">
+     <rect>
+      <x>330</x>
+      <y>480</y>
+      <width>98</width>
+      <height>27</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>send rail</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="sendtrain">
+    <property name="geometry">
+     <rect>
+      <x>640</x>
+      <y>480</y>
+      <width>98</width>
+      <height>27</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>send train</string>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="rail_s_en_line">
+    <property name="geometry">
+     <rect>
+      <x>150</x>
+      <y>160</y>
+      <width>113</width>
+      <height>27</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>AB</string>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="rail_s_th_line">
+    <property name="geometry">
+     <rect>
+      <x>300</x>
+      <y>160</y>
+      <width>113</width>
+      <height>27</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>ab</string>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="rail_e_en_line">
+    <property name="geometry">
+     <rect>
+      <x>470</x>
+      <y>160</y>
+      <width>113</width>
+      <height>27</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>CD</string>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="rail_e_th_line">
+    <property name="geometry">
+     <rect>
+      <x>610</x>
+      <y>160</y>
+      <width>113</width>
+      <height>27</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>cd</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>160</y>
+      <width>66</width>
+      <height>17</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>rail:</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_2">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>290</y>
+      <width>66</width>
+      <height>17</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>train:</string>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="train_trainID__line">
+    <property name="geometry">
+     <rect>
+      <x>140</x>
+      <y>280</y>
+      <width>113</width>
+      <height>27</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>1</string>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="train_carID__line">
+    <property name="geometry">
+     <rect>
+      <x>330</x>
+      <y>280</y>
+      <width>113</width>
+      <height>27</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>2</string>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="train_sp__line">
+    <property name="geometry">
+     <rect>
+      <x>550</x>
+      <y>280</y>
+      <width>113</width>
+      <height>27</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>3</string>
+    </property>
+   </widget>
+   <widget class="QCheckBox" name="hasBroadcastCall_LC">
+    <property name="geometry">
+     <rect>
+      <x>620</x>
+      <y>50</y>
+      <width>161</width>
+      <height>22</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>hasBroadcastCall_LC</string>
+    </property>
+    <property name="tristate">
+     <bool>false</bool>
+    </property>
+   </widget>
   </widget>
   <widget class="QToolBar" name="mainToolBar">
    <attribute name="toolBarArea">
@@ -114,7 +263,6 @@
     <bool>false</bool>
    </attribute>
   </widget>
-  <widget class="QStatusBar" name="statusBar"/>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <resources/>

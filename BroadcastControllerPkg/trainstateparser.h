@@ -12,9 +12,8 @@ private:
     quint8 msgType; //包类型  固定为0x81
     QDateTime systemDateTime;
     quint8 fcs;//累加和
-    quint8 genarateCheckSum();
     void generate();
-    friend class BroadcastManager;
+//    friend class BroadcastManager;
 public:
     quint32 trainID;//列车编号
     quint16 carID;//车厢号

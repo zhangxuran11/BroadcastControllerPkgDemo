@@ -1,5 +1,6 @@
 #include "railwaystateparser.h"
 #include<QDebug>
+#include"ztools.h"
 //线路状态解析器
 
 //    quint8 msgHead; //包起始符
@@ -18,32 +19,27 @@ RailwayStateParser::RailwayStateParser():
     msgLen = 132;
     msgType = 0x82;
 }
-quint8 RailwayStateParser::genarateCheckSum()
-{
-    quint8 sum = 0;
-    for(int i = 0;i < FRAME_SIZE - 1;i++)
-        sum += (quint8)dataFram[i];
-    return sum;
-}
-void RailwayStateParser::genarate()
+
+void RailwayStateParser::generate()
 {
     quint16 tmp = 0;
     dataFram.resize(FRAME_SIZE);
+    dataFram.fill(0,FRAME_SIZE);
     memcpy(dataFram.data(),&msgHead,1);
     memcpy(dataFram.data()+1,&msgLen,1);
     memcpy(dataFram.data()+2,&msgType,1);
-    tmp = startStationEN.toUtf8().length();
+    tmp = startStationEN.toAscii().length();
     memcpy(dataFram.data()+3,&tmp,2);
     memcpy(dataFram.data()+5,startStationEN.toUtf8().data(),tmp);
-    tmp = startStationThai.toUtf8().length();
+    tmp = ZTools::str2unicode(startStationThai).length();
     memcpy(dataFram.data()+21,&tmp,2);
-    memcpy(dataFram.data()+23,startStationThai.toUtf8().data(),tmp);
-    tmp = endStationEN.toUtf8().length();
+    memcpy(dataFram.data()+23,ZTools::str2unicode(startStationThai).data(),tmp);
+    tmp = endStationEN.toAscii().length();
     memcpy(dataFram.data()+67,&tmp,2);
     memcpy(dataFram.data()+69,endStationEN.toUtf8().data(),tmp);
-    tmp = endStationThai.toUtf8().length();
+    tmp = ZTools::str2unicode(endStationThai).length();
     memcpy(dataFram.data()+85,&tmp,2);
-    memcpy(dataFram.data()+87,endStationThai.toUtf8().data(),tmp);
+    memcpy(dataFram.data()+87,ZTools::str2unicode(endStationThai).data(),tmp);
     fcs = genarateCheckSum();
     memcpy(dataFram.data()+131,&fcs,1);
 //    for(int i= 0 ;i < dataFram.length();i++)
@@ -57,4 +53,5 @@ void RailwayStateParser::print()
     qDebug()<<"startStationThai : "<<startStationThai;
     qDebug()<<"endStationEN     : "<<endStationEN;
     qDebug()<<"endStationThai   : "<<endStationThai;
+    printRaw();
 }

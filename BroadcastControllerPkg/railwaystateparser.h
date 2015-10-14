@@ -11,10 +11,9 @@ private:
     quint8 msgType; //包类型  固定为0x82
 
     quint8 fcs;//累加和
-    quint8 genarateCheckSum();
-    void genarate();
+    void generate();
 
-    friend class BroadcastManager;
+//    friend class BroadcastManager;
 public:
     RailwayStateParser();
     QString startStationEN;  //始发站英文版

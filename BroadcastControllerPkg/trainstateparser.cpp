@@ -16,40 +16,36 @@ TrainStateParser::TrainStateParser():BasicParser(18)
     msgHead = 0xf5;
     msgLen = 18;
     msgType = 0x81;
-    systemDateTime = QDateTime::currentDateTime();
+
 }
-quint8 TrainStateParser::genarateCheckSum()
-{
-    quint8 sum = 0;
-    for(int i = 0;i < FRAME_SIZE - 1;i++)
-        sum += (quint8)dataFram[i];
-    return sum;
-}
+
 
 void TrainStateParser::generate()
 {
     dataFram.resize(FRAME_SIZE);
+
     memcpy(dataFram.data(),&msgHead,1);
     memcpy(dataFram.data()+1,&msgLen,1);
     memcpy(dataFram.data()+2,&msgType,1);
+    systemDateTime = QDateTime::currentDateTime();
     dataFram[3] = 0;
     dataFram.data()[3] |= systemDateTime.date().year()%100/10<<4;
-    dataFram.data()[3] |= systemDateTime.date().year()/10;
+    dataFram.data()[3] |= systemDateTime.date().year()%10;
     dataFram[4] = 0;
     dataFram.data()[4] |= systemDateTime.date().month()%100/10<<4;
-    dataFram.data()[4] |= systemDateTime.date().month()/10;
+    dataFram.data()[4] |= systemDateTime.date().month()%10;
     dataFram[5] = 0;
     dataFram.data()[5] |= systemDateTime.date().day()%100/10<<4;
-    dataFram.data()[5] |= systemDateTime.date().day()/10;
+    dataFram.data()[5] |= systemDateTime.date().day()%10;
     dataFram[6] = 0;
     dataFram.data()[6] |= systemDateTime.time().hour()%100/10<<4;
-    dataFram.data()[6] |= systemDateTime.time().hour()/10;
+    dataFram.data()[6] |= systemDateTime.time().hour()%10;
     dataFram[7] = 0;
     dataFram.data()[7] |= systemDateTime.time().minute()%100/10<<4;
-    dataFram.data()[7] |= systemDateTime.time().minute()/10;
+    dataFram.data()[7] |= systemDateTime.time().minute()%10;
     dataFram[8] = 0;
     dataFram.data()[8] |= systemDateTime.time().second()%100/10<<4;
-    dataFram.data()[8] |= systemDateTime.time().second()/10;
+    dataFram.data()[8] |= systemDateTime.time().second()%10;
     memcpy(dataFram.data()+9,&trainID,4);
     memcpy(dataFram.data()+13,&carID,2);
     memcpy(dataFram.data()+15,&speed,2);
@@ -62,4 +58,6 @@ void TrainStateParser::print()
     qDebug()<<"trainID  : "<<trainID;
     qDebug()<<"carID    : "<<carID;
     qDebug()<<"speed    : "<<speed;
+    qDebug()<<"time    : "<<systemDateTime.toString();
+    printRaw();
 }

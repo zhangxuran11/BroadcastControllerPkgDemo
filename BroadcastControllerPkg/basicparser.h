@@ -2,7 +2,7 @@
 #define BASICPARSER_H
 #include<QtGlobal>
 #include<QByteArray>
-#include"basicparser.h"
+
 //呼叫状态解析器
 class BasicParser
 {
@@ -11,7 +11,8 @@ class BasicParser
 protected:
     quint8 FRAME_SIZE;
     QByteArray dataFram;
-    virtual quint8 genarateCheckSum() = 0;
+    quint8 genarateCheckSum();
+    void printRaw();
     virtual void generate() = 0;
 public:
     explicit BasicParser(quint8 _FRAME_SIZE):FRAME_SIZE(_FRAME_SIZE){}
@@ -20,3 +21,4 @@ public:
     virtual void print() = 0;
 };
 #endif // BASICPARSER_H
+

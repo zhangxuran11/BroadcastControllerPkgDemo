@@ -20,7 +20,9 @@ private:
     Ui::MainWindow *ui;
 private slots:
     void fun();
-    void on_pushButton_clicked();
+    void on_sendcall_clicked();
+    void on_rail_clicked();
+    void on_sendtrain_clicked();
 };
 
 #endif // MAINWINDOW_H

@@ -1,6 +1,5 @@
 INCLUDEPATH += $$PWD
 DEPENDPATH += $$PWD
-include(qextserialport/src/qextserialport.pri)
 HEADERS += \
     BroadcastControllerPkg/callstateparser.h \
     BroadcastControllerPkg/trainstateparser.h \
@@ -12,4 +11,5 @@ SOURCES += \
     BroadcastControllerPkg/callstateparser.cpp \
     BroadcastControllerPkg/trainstateparser.cpp \
     BroadcastControllerPkg/railwaystateparser.cpp \
-    BroadcastControllerPkg/broadcastmanager.cpp
+    BroadcastControllerPkg/broadcastmanager.cpp \
+    BroadcastControllerPkg/basicparser.cpp
