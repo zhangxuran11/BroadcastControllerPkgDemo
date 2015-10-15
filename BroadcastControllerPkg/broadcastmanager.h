@@ -18,6 +18,7 @@ class BroadcastManager : public QObject
     QextSerialPort *broadcastPort;
 
     CallStateParser callState;
+    bool start_f;
 signals:
     void readyRead();
 
@@ -31,10 +32,12 @@ public:
     int carId;
     float speed;
 
-    QString startStationEN;
-    QString startStationThai;
-    QString endStationEN;
-    QString endStationThai;
+    QString startStationEN;  //始发站英文版
+    QString startStationThai;  //始发站泰文版
+    QString endStationEN;  //终点站英文版
+    QString endStationThai;  //终点站泰文版
+
+    void start();
     BroadcastManager(const QString &serialName);
     ~BroadcastManager();
     const CallStateParser& getOneCallState(){return callState;}

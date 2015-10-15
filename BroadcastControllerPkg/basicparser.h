@@ -9,12 +9,13 @@ class BasicParser
 
     friend class BroadcastManager;
 protected:
-    quint8 FRAME_SIZE;
+
     QByteArray dataFram;
     quint8 genarateCheckSum();
     void printRaw();
     virtual void generate() = 0;
 public:
+    quint8 FRAME_SIZE;
     explicit BasicParser(quint8 _FRAME_SIZE):FRAME_SIZE(_FRAME_SIZE){}
     const char* getData()const{return dataFram.data();}
 

@@ -22,26 +22,23 @@ RailwayStateParser::RailwayStateParser():
 
 void RailwayStateParser::generate()
 {
-    quint16 tmp = 0;
-    dataFram.resize(FRAME_SIZE);
-    dataFram.fill(0,FRAME_SIZE);
+    QByteArray stationBytes;
+
+    if(stationType == 1 || stationType == 2)
+        stationBytes = stationName.toAscii();
+    else
+        stationBytes = ZTools::str2unicode(stationName);
+    msgLen = stationBytes.length()+5;//整个包的长度
+    FRAME_SIZE = msgLen;
+    dataFram.resize(msgLen);
+    dataFram.fill(0,msgLen);
     memcpy(dataFram.data(),&msgHead,1);
     memcpy(dataFram.data()+1,&msgLen,1);
     memcpy(dataFram.data()+2,&msgType,1);
-    tmp = startStationEN.toAscii().length();
-    memcpy(dataFram.data()+3,&tmp,2);
-    memcpy(dataFram.data()+5,startStationEN.toUtf8().data(),tmp);
-    tmp = ZTools::str2unicode(startStationThai).length();
-    memcpy(dataFram.data()+21,&tmp,2);
-    memcpy(dataFram.data()+23,ZTools::str2unicode(startStationThai).data(),tmp);
-    tmp = endStationEN.toAscii().length();
-    memcpy(dataFram.data()+67,&tmp,2);
-    memcpy(dataFram.data()+69,endStationEN.toUtf8().data(),tmp);
-    tmp = ZTools::str2unicode(endStationThai).length();
-    memcpy(dataFram.data()+85,&tmp,2);
-    memcpy(dataFram.data()+87,ZTools::str2unicode(endStationThai).data(),tmp);
+    memcpy(dataFram.data()+3,&stationType,1);
+    memcpy(dataFram.data()+4,stationBytes.data(),stationBytes.length());
     fcs = genarateCheckSum();
-    memcpy(dataFram.data()+131,&fcs,1);
+    memcpy(dataFram.data()+msgLen-1,&fcs,1);
 //    for(int i= 0 ;i < dataFram.length();i++)
 //        printf("%d--%x\n",i,dataFram.data()[i]);
 
@@ -49,9 +46,14 @@ void RailwayStateParser::generate()
 
 void RailwayStateParser::print()
 {
-    qDebug()<<"startStationEN   : "<<startStationEN;
-    qDebug()<<"startStationThai : "<<startStationThai;
-    qDebug()<<"endStationEN     : "<<endStationEN;
-    qDebug()<<"endStationThai   : "<<endStationThai;
+	if(stationType == 1)
+		qDebug()<<"english start station";
+	if(stationType == 2)
+		qDebug()<<"english end station";
+	if(stationType == 3)
+		qDebug()<<"Thai start station";
+	if(stationType == 4)
+		qDebug()<<"Thai statrt station";
+    qDebug()<<"stationName   : "<<stationName;
     printRaw();
 }

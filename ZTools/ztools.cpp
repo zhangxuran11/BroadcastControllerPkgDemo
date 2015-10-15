@@ -87,8 +87,8 @@ QByteArray ZTools::str2unicode(QString str)
     str = codec->toUnicode(str.toAscii().data());
     foreach(const QChar& qChar,str)
     {
-        bytes.append(qChar.unicode()>>8&0xff);
         bytes.append(qChar.unicode()&0xff);
+        bytes.append(qChar.unicode()>>8&0xff);
     }
     return bytes;
 }

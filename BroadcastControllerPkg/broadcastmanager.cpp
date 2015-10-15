@@ -13,33 +13,48 @@ using namespace std;
 static void QextSerialPort_init(QextSerialPort *port)
 {
     //port->setDtr();
-    port->setBaudRate(BAUD19200);
+    port->setBaudRate(BAUD9600);
     port->setFlowControl(FLOW_OFF);
-    port->setParity(PAR_ODD);
+    port->setParity(PAR_NONE);
     port->setDataBits(DATA_8);
     port->setStopBits(STOP_1);
-    port->setTimeout(500);
+    //port->setTimeout(10);
 
 }
 void BroadcastManager::sendTrainState()
 {
+    qDebug("sendTrainState");
     TrainStateParser parser;
     parser.carID = carId;
     parser.trainID = trainId;
     parser.speed = speed;
     sendBroadcastPkg(parser);
+    parser.print();
 }
 void BroadcastManager::sendLineInfo()
 {
+    qDebug("sendLineInfo");
+    static int stationType = 1;
     RailwayStateParser parser;
-    parser.startStationEN = startStationEN;
-    parser.startStationThai = startStationThai;
-    parser.endStationEN = endStationEN;
-    parser.endStationThai = endStationThai;
+    parser.stationType = stationType;
+    if(stationType == 1)
+        parser.stationName = startStationEN;
+    else if(stationType == 2)
+        parser.stationName = endStationEN;
+    else if(stationType == 3)
+        parser.stationName = startStationThai;
+    else if(stationType == 4)
+        parser.stationName = endStationThai;
+    stationType++;
+    if(stationType == 5)
+        stationType = 1;
     sendBroadcastPkg(parser);
+    parser.print();
 }
 BroadcastManager::BroadcastManager(const QString &serialName)
 {
+    start_f = false;
+
     trainId = 0;
     carId = 0;
     speed = 0;
@@ -48,12 +63,16 @@ BroadcastManager::BroadcastManager(const QString &serialName)
     pthread->start();
     trainStateTimer = new QTimer;
     lineInfoTimer = new QTimer;
-    trainStateTimer->moveToThread(pthread);
-    lineInfoTimer->moveToThread(pthread);
+
     trainStateTimer->setInterval(1000);
-    lineInfoTimer->setInterval(5000);
+    lineInfoTimer->setInterval(1000);
+    trainStateTimer->start();
+    lineInfoTimer->start();
+
     connect(trainStateTimer,SIGNAL(timeout()),this,SLOT(sendTrainState()),Qt::DirectConnection);
     connect(lineInfoTimer,SIGNAL(timeout()),this,SLOT(sendLineInfo()),Qt::DirectConnection);
+    trainStateTimer->moveToThread(pthread);
+    lineInfoTimer->moveToThread(pthread);
 
     broadcastPort = new QextSerialPort(serialName,QextSerialPort::EventDriven);
     QextSerialPort_init(broadcastPort);
@@ -70,10 +89,14 @@ BroadcastManager::BroadcastManager(const QString &serialName)
 
 
 }
-
+void BroadcastManager::start()
+{
+    start_f = true;
+}
 void BroadcastManager::sendBroadcastPkg(BasicParser& parser)
 {
-
+    if(!start_f)
+        return;
     parser.generate();
     qint64  writeCount= 0,writeLen = parser.FRAME_SIZE;
     do
@@ -89,11 +112,12 @@ enum state_flag{INIT,WAIT_HEAD,WAIT_LEN,COMPLETE};
 void BroadcastManager::on_readyRead()
 {
 
-    qDebug("recv data on ttymxc2...\n");
+//    qDebug("recv data on ttymxc2...\n");
     static state_flag state = INIT;
     static int start_pos = 0;
     static QByteArray _bytes;
     _bytes.append(broadcastPort->readAll());
+label:
     if(state == INIT)
     {
 //        qDebug("INIT");
@@ -132,13 +156,14 @@ void BroadcastManager::on_readyRead()
         if(8 == (quint8)bytes.data()[1] && 0x80 == (quint8)bytes.data()[2])
         {
             callState.load(QByteArray(bytes.data(),8));
-            callState.print();
+ //           callState.print();
 //            qDebug()<<"callState  isValid :"<<callState.isValid;
             if(callState.isValid)
             {
                 emit readyRead();
             }
         }
+        goto label;
     }
 //    qDebug()<<"------------------------------------------------------in the end state = "<<state;
 }

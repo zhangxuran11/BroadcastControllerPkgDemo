@@ -6,14 +6,28 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    broadcastManager_r = new BroadcastManager("/dev/ttyUSB1");
+    broadcastManager_r = new BroadcastManager("/dev/ttymxc2");
+    broadcastManager_r->speed = 10;
+    broadcastManager_r->trainId =23;
+    broadcastManager_r->carId =07;
+    broadcastManager_r->startStationEN =   "shanghaibeijingtianjin";
+    broadcastManager_r->startStationThai = "นึ่รู้รู้รู้รู้รู้รู้รู้รู้รู้รู้รู้รู้รู้รู้รู้รู้รู้รู้รู้รู้นึ่";
+    broadcastManager_r->endStationEN =     "guangdongshanghaibeiji";
+    broadcastManager_r->endStationThai = "นึ่รู้รู้รู้รู้รู้รู้รู้รู้รู้รู้รู้รู้รู้รู้รู้รู้รู้รู้รู้รู้นึ่";
+
+//        broadcastManager_r->startStationEN =   "shanghai";
+//        broadcastManager_r->startStationThai = "นึ่รู้รู้รู้รู้รู้รู้";
+//        broadcastManager_r->endStationEN =     "guaeiji";
+//        broadcastManager_r->endStationThai = "นึ่รู้รู้รู้รู้รู้รู้รู้นึ่";
+
     //broadcastManager_s = new BroadcastManager("/dev/ttyUSB0");
     connect(broadcastManager_r,SIGNAL(readyRead()),this,SLOT(fun()));
+    broadcastManager_r->start();
 }
 void MainWindow::fun()
 {
     CallStateParser callState = broadcastManager_r->getOneCallState();
-    callState.print();
+    //callState.print();
 }
 MainWindow::~MainWindow()
 {
@@ -37,10 +51,10 @@ void MainWindow::on_sendcall_clicked()
 void MainWindow::on_rail_clicked()
 {
     RailwayStateParser rail;
-    rail.startStationEN = ui->rail_s_en_line->text();
-    rail.startStationThai = ui->rail_s_th_line->text();
-    rail.endStationEN = ui->rail_e_en_line->text();
-    rail.endStationThai = ui->rail_e_th_line->text();
+    //rail.startStationEN = ui->rail_s_en_line->text();
+    //rail.startStationThai = ui->rail_s_th_line->text();
+    //rail.endStationEN = ui->rail_e_en_line->text();
+    //rail.endStationThai = ui->rail_e_th_line->text();
     broadcastManager_s->sendBroadcastPkg(rail);
     rail.print();
 }

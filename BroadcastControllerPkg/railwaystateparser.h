@@ -9,18 +9,15 @@ private:
     quint8 msgHead; //包起始符
     quint8 msgLen;  //包长度  固定长度132byte
     quint8 msgType; //包类型  固定为0x82
-
     quint8 fcs;//累加和
     void generate();
 
 //    friend class BroadcastManager;
 public:
+    quint8 stationType;//线路类型 1-英文始发站，2-英文终点站，3-泰文始发站，4-泰文终点站
     RailwayStateParser();
-    QString startStationEN;  //始发站英文版
-    QString startStationThai;  //始发站泰文版
-    QString endStationEN;  //终点站英文版
-    QString endStationThai;  //终点站泰文版
 
+    QString stationName;
     void print();
 
 
