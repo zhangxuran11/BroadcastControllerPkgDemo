@@ -11,9 +11,9 @@ MainWindow::MainWindow(QWidget *parent) :
     broadcastManager_r->trainId =23;
     broadcastManager_r->carId =07;
     broadcastManager_r->startStationEN =   "shanghaibeijingtianjin";
-    broadcastManager_r->startStationThai = "นึ่รู้รู้รู้รู้รู้รู้รู้รู้รู้รู้รู้รู้รู้รู้รู้รู้รู้รู้รู้รู้นึ่";
+    broadcastManager_r->startStationThai = "นึ่รู้รู้รู้รู้รู้รู้นึ่นึ่นึ่นึ่รู้นึ่";
     broadcastManager_r->endStationEN =     "guangdongshanghaibeiji";
-    broadcastManager_r->endStationThai = "นึ่รู้รู้รู้รู้รู้รู้รู้รู้รู้รู้รู้รู้รู้รู้รู้รู้รู้รู้รู้รู้นึ่";
+    broadcastManager_r->endStationThai = "นึ่รู้รู้นึ่";
 
 //        broadcastManager_r->startStationEN =   "shanghai";
 //        broadcastManager_r->startStationThai = "นึ่รู้รู้รู้รู้รู้รู้";
@@ -27,7 +27,7 @@ MainWindow::MainWindow(QWidget *parent) :
 void MainWindow::fun()
 {
     CallStateParser callState = broadcastManager_r->getOneCallState();
-    //callState.print();
+    callState.print();
 }
 MainWindow::~MainWindow()
 {

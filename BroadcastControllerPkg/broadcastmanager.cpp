@@ -29,7 +29,7 @@ void BroadcastManager::sendTrainState()
     parser.trainID = trainId;
     parser.speed = speed;
     sendBroadcastPkg(parser);
-    parser.print();
+    //parser.print();
 }
 void BroadcastManager::sendLineInfo()
 {
@@ -49,7 +49,7 @@ void BroadcastManager::sendLineInfo()
     if(stationType == 5)
         stationType = 1;
     sendBroadcastPkg(parser);
-    parser.print();
+    //parser.print();
 }
 BroadcastManager::BroadcastManager(const QString &serialName)
 {
@@ -95,9 +95,9 @@ void BroadcastManager::start()
 }
 void BroadcastManager::sendBroadcastPkg(BasicParser& parser)
 {
+    parser.generate();
     if(!start_f)
         return;
-    parser.generate();
     qint64  writeCount= 0,writeLen = parser.FRAME_SIZE;
     do
     {
@@ -171,6 +171,7 @@ BroadcastManager::~BroadcastManager()
 {
     delete trainStateTimer;
     delete lineInfoTimer;
-    delete pthread;
+    pthread->exit();
+	delete pthread;
     delete broadcastPort;
 }

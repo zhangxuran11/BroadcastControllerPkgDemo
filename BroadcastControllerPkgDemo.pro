@@ -21,7 +21,7 @@ FORMS    += mainwindow.ui
 DEFINES += $$(ARCH)
 contains( DEFINES, arm ) {
 
-    mytarget.commands = scp ./${TARGET} root@192.168.11.10:/
+    mytarget.commands = scp ./${TARGET} root@192.168.13.10:/
 }
 
 
