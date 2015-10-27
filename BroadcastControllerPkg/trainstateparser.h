@@ -10,11 +10,11 @@ private:
     quint8 msgHead; //包起始符
     quint8 msgLen;  //包长度  固定长度18byte
     quint8 msgType; //包类型  固定为0x81
-    QDateTime systemDateTime;
     quint8 fcs;//累加和
     void generate();
 //    friend class BroadcastManager;
 public:
+    QDateTime systemDateTime;
     quint32 trainID;//列车编号
     quint16 carID;//车厢号
     quint16 speed;//列车速度

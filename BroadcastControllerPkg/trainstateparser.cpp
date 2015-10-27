@@ -27,7 +27,6 @@ void TrainStateParser::generate()
     memcpy(dataFram.data(),&msgHead,1);
     memcpy(dataFram.data()+1,&msgLen,1);
     memcpy(dataFram.data()+2,&msgType,1);
-    systemDateTime = QDateTime::currentDateTime();
     dataFram[3] = 0;
     dataFram.data()[3] |= systemDateTime.date().year()%100/10<<4;
     dataFram.data()[3] |= systemDateTime.date().year()%10;

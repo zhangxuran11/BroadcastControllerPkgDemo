@@ -202,7 +202,7 @@
    <widget class="QLineEdit" name="train_trainID__line">
     <property name="geometry">
      <rect>
-      <x>140</x>
+      <x>90</x>
       <y>280</y>
       <width>113</width>
       <height>27</height>
@@ -215,7 +215,7 @@
    <widget class="QLineEdit" name="train_carID__line">
     <property name="geometry">
      <rect>
-      <x>330</x>
+      <x>270</x>
       <y>280</y>
       <width>113</width>
       <height>27</height>

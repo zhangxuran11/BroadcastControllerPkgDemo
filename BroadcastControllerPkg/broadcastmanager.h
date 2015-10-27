@@ -28,6 +28,7 @@ private slots:
     void sendLineInfo();
 
 public:
+    QDateTime dateTime;
     int trainId;
     int carId;
     float speed;

@@ -25,6 +25,7 @@ void BroadcastManager::sendTrainState()
 {
     qDebug("sendTrainState");
     TrainStateParser parser;
+    parser.systemDateTime = parser.systemDateTime = QDateTime::currentDateTime();;
     parser.carID = carId;
     parser.trainID = trainId;
     parser.speed = speed;

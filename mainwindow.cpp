@@ -14,6 +14,7 @@ MainWindow::MainWindow(QWidget *parent) :
     broadcastManager_r->startStationThai = "นึ่รู้รู้รู้รู้รู้รู้นึ่นึ่นึ่นึ่รู้นึ่";
     broadcastManager_r->endStationEN =     "guangdongshanghaibeiji";
     broadcastManager_r->endStationThai = "นึ่รู้รู้นึ่";
+    broadcastManager_r->dateTime = QDateTime::currentDateTime();
 
 //        broadcastManager_r->startStationEN =   "shanghai";
 //        broadcastManager_r->startStationThai = "นึ่รู้รู้รู้รู้รู้รู้";
@@ -27,6 +28,15 @@ MainWindow::MainWindow(QWidget *parent) :
 void MainWindow::fun()
 {
     CallStateParser callState = broadcastManager_r->getOneCallState();
+    if(callState.hasBroadcast_lc)
+    {
+        int speed = ui->train_sp__line->text().toInt()+1;
+        if(speed >=40 )
+            speed = 0;
+        else
+            speed++;
+        ui->train_sp__line->setText(QString::number(speed));
+    }
     callState.print();
 }
 MainWindow::~MainWindow()
